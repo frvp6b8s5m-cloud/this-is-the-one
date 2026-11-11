@@ -244,3 +244,25 @@ body[data-bzaudio-theme="light"] .text-link{color:#171a1c}
 .tool-actions>span{font-size:9px;line-height:1.6;color:#8a9090}
 @media(max-width:900px){.audio-tools{grid-template-columns:1fr}.tools-sidebar{display:grid;grid-template-columns:1fr 1fr}.tools-sidebar-title,.tools-sidebar-note{grid-column:1/-1}.tools-sidebar-note{margin-top:8px}.tools-intro{grid-template-columns:1fr;gap:15px}.tool-workspace{min-height:0}}
 @media(max-width:560px){.tools-sidebar{grid-template-columns:1fr}.tools-sidebar-title,.tools-sidebar-note{grid-column:auto}.tool-workspace{padding:22px 18px}.tool-workspace-head h2{font-size:21px}.tool-two-inputs{grid-template-columns:1fr}.tool-actions{align-items:flex-start;flex-direction:column}.tool-result{padding:19px}.tools-intro h2{font-size:42px}}
+
+/* Advanced SoundMatch configurator */
+.wizard-advanced .wizard-aside{position:relative}
+.wizard-advanced .wizard-steps{display:grid;gap:4px}
+.wizard-advanced .wizard-step{width:100%;border:0;background:transparent;text-align:left;color:#9ba1a1;cursor:pointer;font:inherit}
+.wizard-advanced .wizard-step.active{color:#fff}
+.wizard-advanced .wizard-step.complete{color:#c6cbc8}
+.wizard-advanced .wizard-step:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wizard-advanced .wizard-form-step{max-width:720px}
+.wizard-advanced .priority-grid{margin:12px 0 22px}
+.wizard-advanced .field-label{margin-top:22px}
+.wizard-advanced .wizard-range{display:flex;align-items:center;gap:14px;margin:8px 0 20px}
+.wizard-advanced .wizard-range input{flex:1;accent-color:var(--accent)}
+.wizard-advanced .wizard-range span{font-size:10px;color:#777;min-width:95px;text-align:right}
+.wizard-check-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0 20px}
+.wizard-check-grid label{display:flex;align-items:center;gap:9px;border:1px solid #e1ded7;padding:12px;background:#faf9f6;font-size:10px;cursor:pointer;min-height:44px}
+.wizard-check-grid input{accent-color:var(--accent);width:15px;height:15px}
+.wizard-check-grid label:has(input:checked){border-color:var(--accent);background:#fff7f2}
+.wizard-advanced .wizard-progress{margin-bottom:5px}
+.wizard-advanced .wizard-actions{position:sticky;bottom:0;background:rgba(255,255,255,.96);padding:14px 0 4px;z-index:2}
+.wizard-advanced .wizard-aside-foot{margin-top:22px}
+@media(max-width:680px){.wizard-advanced .wizard-steps{grid-template-columns:repeat(3,minmax(0,1fr));gap:13px 8px}.wizard-advanced .wizard-step{font-size:8px}.wizard-check-grid{grid-template-columns:1fr}.wizard-advanced .wizard-actions{gap:10px}.wizard-advanced .wizard-actions .button{flex:1;justify-content:center}}
