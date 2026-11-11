@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowDownRight, ArrowRight, ArrowUpRight, AudioLines, Check, CirclePlay, SlidersHorizontal, Wrench } from "lucide-react";
+import { ArrowDownRight, ArrowRight, ArrowUpRight, Check, CirclePlay, SlidersHorizontal, Wrench } from "lucide-react";
 import { categories, plannedBrands } from "@/lib/catalog";
 import { ProductCategoryCard } from "@/components/product-category-card";
 
@@ -54,7 +54,7 @@ export default function HomePage() {
 
       <section className="section brand-section"><div className="container"><div className="brand-heading"><div><div className="eyebrow"><span className="eyebrow-dot"/> THE RIGHT MANUFACTURER FOR THE JOB</div><h2>More choice.<br /><span>One point of contact.</span></h2></div><p>We are building a cross-brand catalog. Manufacturer names below are examples of the ecosystem BZaudio intends to source from; no authorized-dealer relationship or current stock is implied.</p></div><div className="brand-list">{plannedBrands.map((brand,i)=><div key={brand}><span>0{i+1}</span>{brand}<ArrowUpRight size={15}/></div>)}</div><div className="brand-note"><CirclePlay size={16}/> Brand and product availability is confirmed individually before quoting.</div></div></section>
 
-      <section className="final-cta"><div className="container final-cta-inner"><div><div className="eyebrow"><span className="eyebrow-dot"/> LET'S GET YOUR SYSTEM RIGHT</div><h2>Start with what<br />you need.</h2></div><div><p>Tell us about your space and what you're trying to do. We'll help you figure out the next step.</p><Link href="/soundmatch" className="button button-primary">Start your SoundMatch <ArrowUpRight size={18}/></Link></div><ArrowDownRight className="cta-arrow" size={76}/></div></section>
+      <section className="final-cta"><div className="container final-cta-inner"><div><div className="eyebrow"><span className="eyebrow-dot"/> LET&apos;S GET YOUR SYSTEM RIGHT</div><h2>Start with what<br />you need.</h2></div><div><p>Tell us about your space and what you&apos;re trying to do. We&apos;ll help you figure out the next step.</p><Link href="/soundmatch" className="button button-primary">Start your SoundMatch <ArrowUpRight size={18}/></Link></div><ArrowDownRight className="cta-arrow" size={76}/></div></section>
     </>
   );
 }
