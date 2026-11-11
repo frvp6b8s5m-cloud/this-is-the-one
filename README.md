@@ -15,7 +15,7 @@ BZaudio is a multi-brand audio equipment retailer and installation company. It h
 
 ## Run locally
 
-Requirements: Node.js 20.9+ and npm.
+Requirements: Node.js 24 and npm (the same major version used by GitHub Actions).
 
 ```bash
 npm install
