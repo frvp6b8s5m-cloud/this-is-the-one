@@ -52,6 +52,9 @@ jobs:
             git push origin HEAD:refs/heads/planning/bzaudio-foundation
           fi
 
+      - name: Verify clean install from committed lockfile
+        run: npm ci --no-audit --no-fund
+
       - name: Lint
         run: npm run lint
 
