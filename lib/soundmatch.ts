@@ -160,14 +160,49 @@ export function evaluateSoundMatch(input: SoundMatchInput): PackagePlan[] {
   }));
 }
 
+const allowedSources = [
+  "Microphones", "Playback", "Instruments / DI", "DJ controller",
+  "Computer / USB", "Video / HDMI audio", "Network audio",
+] as const;
+const allowedConnectivity = [
+  "Analog XLR", "TRS / instrument", "AES digital", "Dante / audio network",
+  "USB audio", "Bluetooth / wireless", "Optical / consumer digital",
+] as const;
+
 export function validateSoundMatchInput(input: SoundMatchInput): string[] {
   const errors: string[] = [];
+  if (!input || typeof input !== "object" || Array.isArray(input)) {
+    return ["Project details are missing or invalid."];
+  }
+
+  const isOneOf = (value: unknown, allowed: readonly string[]) =>
+    typeof value === "string" && allowed.includes(value);
+
+  if (!isOneOf(input.venue, ["church", "live", "dj", "school", "commercial", "other"])) errors.push("Choose a supported venue type.");
+  if (!isOneOf(input.indoor, ["indoor", "outdoor", "both"])) errors.push("Choose a supported environment.");
+  if (!isOneOf(input.priority, ["speech", "music", "bass", "portable", "expandable"])) errors.push("Choose a supported sound priority.");
+  if (!isOneOf(input.coverage, ["wide", "long", "distributed", "unknown"])) errors.push("Choose a supported coverage preference.");
+  if (!isOneOf(input.subwoofers, ["none", "one-pair", "multiple", "unsure"])) errors.push("Choose a supported subwoofer preference.");
+  if (!isOneOf(input.monitoring, ["none", "wedges", "in-ear", "both", "unsure"])) errors.push("Choose a supported monitoring preference.");
+  if (!isOneOf(input.mixer, ["digital", "analog", "no-preference", "already-own"])) errors.push("Choose a supported mixer preference.");
+  if (!isOneOf(input.mounting, ["floor", "wall", "flown", "mixed", "unknown"])) errors.push("Choose a supported mounting preference.");
+  if (!isOneOf(input.power, ["standard", "dedicated", "unknown"])) errors.push("Choose a supported power preference.");
+  if (!isOneOf(input.expansion, ["fixed", "some", "major"])) errors.push("Choose a supported expansion preference.");
+
   if (!Number.isFinite(input.audience) || input.audience < 1 || input.audience > 100000) errors.push("Audience size must be between 1 and 100,000.");
   if (input.budget !== null && (!Number.isFinite(input.budget) || input.budget < 0 || input.budget > 10000000)) errors.push("Budget must be between $0 and $10,000,000.");
   if (!Number.isInteger(input.zones) || input.zones < 1 || input.zones > 32) errors.push("Zones must be between 1 and 32.");
   if (!Number.isInteger(input.micChannels) || input.micChannels < 0 || input.micChannels > 256) errors.push("Input channels must be between 0 and 256.");
-  if (input.dimensions.length > 120) errors.push("Room dimensions must be 120 characters or fewer.");
-  if (input.existing.length > 500) errors.push("Existing equipment notes must be 500 characters or fewer.");
-  if (input.sources.length > 12 || input.connectivity.length > 12) errors.push("Too many selected connection types.");
+
+  if (typeof input.dimensions !== "string" || input.dimensions.length > 120) errors.push("Room dimensions must be a string of 120 characters or fewer.");
+  if (typeof input.existing !== "string" || input.existing.length > 500) errors.push("Existing equipment notes must be a string of 500 characters or fewer.");
+  if (typeof input.installation !== "boolean") errors.push("Installation preference must be yes or no.");
+
+  if (!Array.isArray(input.sources) || input.sources.length > 12 || input.sources.some((value) => !isOneOf(value, allowedSources)) || new Set(input.sources).size !== input.sources.length) {
+    errors.push("Choose up to 12 unique supported audio sources.");
+  }
+  if (!Array.isArray(input.connectivity) || input.connectivity.length > 12 || input.connectivity.some((value) => !isOneOf(value, allowedConnectivity)) || new Set(input.connectivity).size !== input.connectivity.length) {
+    errors.push("Choose up to 12 unique supported connection types.");
+  }
   return errors;
 }
