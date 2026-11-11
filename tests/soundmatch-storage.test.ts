@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { parseSavedSoundMatchDesigns, type SavedSoundMatchDesign } from "../lib/soundmatch-storage";
+import {
+  parseSavedSoundMatchDesigns,
+  validateSavedSoundMatchDesignDraft,
+  type SavedSoundMatchDesign,
+} from "../lib/soundmatch-storage";
 import type { SoundMatchInput } from "../lib/soundmatch";
 
 const form: SoundMatchInput = {
@@ -48,5 +52,37 @@ describe("parseSavedSoundMatchDesigns", () => {
     const many = Array.from({ length: 55 }, (_, index) => ({ ...valid, id: String(index) }));
     expect(parseSavedSoundMatchDesigns(many)).toHaveLength(50);
     expect(parseSavedSoundMatchDesigns([{ ...valid, name: "x".repeat(121) }])).toEqual([]);
+  });
+});
+
+describe("validateSavedSoundMatchDesignDraft", () => {
+  it("accepts a valid design while below the saved-design limit", () => {
+    expect(validateSavedSoundMatchDesignDraft(valid, 49)).toBeNull();
+  });
+
+  it("prevents saving more than 50 designs", () => {
+    expect(validateSavedSoundMatchDesignDraft(valid, 50)).toMatch(/50 designs/);
+  });
+
+  it("rejects overlong names and custom role fields before persistence", () => {
+    expect(validateSavedSoundMatchDesignDraft({ ...valid, name: "x".repeat(121) }, 0)).not.toBeNull();
+    expect(validateSavedSoundMatchDesignDraft({
+      ...valid,
+      roles: { Recommended: [{ role: "x".repeat(121), quantity: "1", reason: "ok" }] },
+    }, 0)).not.toBeNull();
+    expect(validateSavedSoundMatchDesignDraft({
+      ...valid,
+      roles: { Recommended: [{ role: "Mains", quantity: "x".repeat(121), reason: "ok" }] },
+    }, 0)).not.toBeNull();
+  });
+
+  it("rejects more than 50 custom roles in a tier", () => {
+    const roles = Array.from({ length: 51 }, (_, index) => ({
+      role: `Role ${index}`, quantity: "1", reason: "Custom role",
+    }));
+    expect(validateSavedSoundMatchDesignDraft({
+      ...valid,
+      roles: { Recommended: roles },
+    }, 0)).not.toBeNull();
   });
 });
