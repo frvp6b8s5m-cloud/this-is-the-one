@@ -1,23 +1,46 @@
 # BZaudio
 
-**Professional audio. Made easier.**
+**Professional Audio. Made Easier.**
 
 BZaudio is a multi-brand audio equipment retailer and installation company. It helps beginners, organizations, venues, and audio professionals choose, purchase, plan, and install sound systems using products from established manufacturers.
 
-## Business areas
+## What's in this repository
 
-- **BZaudio Supply:** multi-brand product catalog and sales, with supplier-based fulfillment where available.
-- **BZaudio Installation:** system design, installation, upgrades, and support inquiries.
-- **BZaudio SoundMatch:** the signature guided system builder that recommends equipment packages based on a customer's venue, needs, existing equipment, and budget.
-- **BZaudio Tools:** a small collection of practical audio calculators and references.
-- **Customer System Profiles:** a later-stage feature for equipment records, manuals, diagrams, and service history.
+- Responsive BZaudio public website
+- Category-led catalog foundation (supplier-backed product listings are added after sourcing is confirmed)
+- Guided BZaudio SoundMatch questionnaire with explainable Essential, Recommended, and Professional planning paths
+- Installation and consultation service page
+- Quote brief builder that prepares a copyable request without pretending to submit it
+- Deterministic, testable SoundMatch rules
 
-## Product principle
+## Run locally
 
-Keep the first release useful and understandable. Use clear rules and verified product specifications before adding advanced automation or AI. Recommendations are planning guidance, not a substitute for qualified system design, rigging, electrical review, or acoustic commissioning.
+Requirements: Node.js 20.9+ and npm.
 
-## Project status
+```bash
+npm install
+npm run dev
+```
 
-Planning and repository foundation. No production application has been implemented yet.
+Open http://localhost:3000.
 
-See [docs/brand-specification.md](docs/brand-specification.md), [docs/product-requirements.md](docs/product-requirements.md), [docs/architecture.md](docs/architecture.md), and [docs/soundmatch-rules.md](docs/soundmatch-rules.md).
+## Quality checks
+
+```bash
+npm run lint
+npm run typecheck
+npm test
+npm run build
+```
+
+## Current implementation boundaries
+
+- The catalog contains category entry points, not fake live inventory.
+- No manufacturer partnership, price, stock level, or delivery date is claimed until verified supplier data is connected.
+- SoundMatch generates preliminary equipment-role plans, not exact product compatibility or acoustic predictions.
+- Quote requests are prepared locally for copying; no request is transmitted or stored yet.
+- Supabase, payment processing, supplier feeds, customer accounts, and admin tools are intentionally deferred until credentials and business requirements are ready.
+
+## Project documents
+
+See [brand specification](docs/brand-specification.md), [product requirements](docs/product-requirements.md), [architecture](docs/architecture.md), and [SoundMatch rules](docs/soundmatch-rules.md).
