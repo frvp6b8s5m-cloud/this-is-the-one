@@ -1,4 +1,4 @@
-import { validateSoundMatchInput, type PackagePlan, type SoundMatchInput } from "@/lib/soundmatch";
+import { validateSoundMatchInput, type PackagePlan, type SoundMatchInput } from "./soundmatch";
 
 export type SavedSoundMatchDesign = {
   id: string;
