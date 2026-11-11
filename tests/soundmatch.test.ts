@@ -34,6 +34,13 @@ describe("evaluateSoundMatch", () => {
     const professional = evaluateSoundMatch(validInput).find((plan) => plan.name === "Professional");
     expect(professional?.roles.some((role) => role.role === "System processing & commissioning")).toBe(true);
   });
+
+  it("includes installation coordination only when requested", () => {
+    const withoutInstallation = evaluateSoundMatch(validInput)[0];
+    const withInstallation = evaluateSoundMatch({ ...validInput, installation: true })[0];
+    expect(withoutInstallation.roles.some((role) => role.role === "Installation & setup coordination")).toBe(false);
+    expect(withInstallation.roles.some((role) => role.role === "Installation & setup coordination")).toBe(true);
+  });
 });
 
 describe("validateSoundMatchInput", () => {
@@ -47,9 +54,16 @@ describe("validateSoundMatchInput", () => {
     expect(validateSoundMatchInput(validInput)).toEqual([]);
   });
 
-  it("rejects negative budgets", () => {
+  it("rejects negative and out-of-range budgets", () => {
     expect(validateSoundMatchInput({ ...validInput, budget: -1 })).toContain(
-      "Budget must be a non-negative number.",
+      "Budget must be between $0 and $10,000,000.",
     );
+    expect(validateSoundMatchInput({ ...validInput, budget: 10000001 })).toContain(
+      "Budget must be between $0 and $10,000,000.",
+    );
+  });
+
+  it("accepts audiences above 1,000 up to the supported limit", () => {
+    expect(validateSoundMatchInput({ ...validInput, audience: 25000 })).toEqual([]);
   });
 });
