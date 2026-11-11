@@ -77,6 +77,14 @@ function rolesFor(input: SoundMatchInput, tier: PackagePlan["name"]) {
     reason: "Completes the signal path and installation plan; cable type, lengths, mounting, and power require site confirmation.",
   });
 
+  if (input.installation) {
+    roles.push({
+      role: "Installation & setup coordination",
+      quantity: "Scope confirmed after site review",
+      reason: "Installation help was requested; mounting, cabling, access, power, and responsibilities must be confirmed for the actual site.",
+    });
+  }
+
   if (tier === "Professional") {
     roles.push({
       role: "System processing & commissioning",
@@ -133,8 +141,8 @@ export function validateSoundMatchInput(input: SoundMatchInput): string[] {
   if (!Number.isFinite(input.audience) || input.audience < 1 || input.audience > 100000) {
     errors.push("Audience size must be between 1 and 100,000.");
   }
-  if (input.budget !== null && (!Number.isFinite(input.budget) || input.budget < 0)) {
-    errors.push("Budget must be a non-negative number.");
+  if (input.budget !== null && (!Number.isFinite(input.budget) || input.budget < 0 || input.budget > 10000000)) {
+    errors.push("Budget must be between $0 and $10,000,000.");
   }
   if (input.dimensions.length > 120) errors.push("Room dimensions must be 120 characters or fewer.");
   if (input.existing.length > 500) errors.push("Existing equipment notes must be 500 characters or fewer.");
