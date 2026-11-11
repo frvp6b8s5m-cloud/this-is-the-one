@@ -98,7 +98,7 @@ export function evaluateSoundMatch(input: SoundMatchInput): PackagePlan[] {
     expandable: "future expansion",
   };
 
-  return [
+  const plans: PackagePlan[] = [
     {
       name: "Essential",
       summary: "A focused starting point built around the core system roles.",
@@ -120,7 +120,9 @@ export function evaluateSoundMatch(input: SoundMatchInput): PackagePlan[] {
       status: "NEEDS_REVIEW",
       tradeoff: "Includes a clearer path for processing and commissioning, with more design work required.",
     },
-  ].map((plan) => ({
+  ];
+
+  return plans.map((plan) => ({
     ...plan,
     summary: `${plan.summary} Planned for ${venue}, with ${priorities[input.priority]} in mind.`,
   }));
