@@ -13,6 +13,7 @@ export function SiteFooter() {
           <Link href="/shop">Shop categories</Link>
           <Link href="/soundmatch">Build with SoundMatch</Link>
           <Link href="/installation">Installation</Link>
+          <Link href="/studio">Personalize your workspace</Link>
           <Link href="/contact">Contact / quote</Link>
         </div>
         <Link href="/soundmatch" className="footer-prompt">Start your system plan <ArrowUpRight size={17} /></Link>
