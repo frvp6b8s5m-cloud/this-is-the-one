@@ -66,7 +66,9 @@ export function SoundMatchWizard() {
     setCopied(false);
   }
 
-  const selectedRoleCount = (editablePlans[selected] ?? plans.find((plan) => plan.name === selected)?.roles ?? []).length;\n\n  const radio = <T extends string>(value: T, current: T, setter: (value: T) => void, options: {value:T;label:string;description?:string}[]) => (
+  const selectedRoleCount = (editablePlans[selected] ?? plans.find((plan) => plan.name === selected)?.roles ?? []).length;
+
+  const radio = <T extends string>(value: T, current: T, setter: (value: T) => void, options: {value:T;label:string;description?:string}[]) => (
     <div className="priority-grid">{options.map((option) => <Choice key={option.value} label={option.label} description={option.description} selected={current === option.value} onClick={() => setter(option.value)} />)}</div>
   );
 
