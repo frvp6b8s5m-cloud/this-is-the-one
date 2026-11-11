@@ -266,3 +266,26 @@ body[data-bzaudio-theme="light"] .text-link{color:#171a1c}
 .wizard-advanced .wizard-actions{position:sticky;bottom:0;background:rgba(255,255,255,.96);padding:14px 0 4px;z-index:2}
 .wizard-advanced .wizard-aside-foot{margin-top:22px}
 @media(max-width:680px){.wizard-advanced .wizard-steps{grid-template-columns:repeat(3,minmax(0,1fr));gap:13px 8px}.wizard-advanced .wizard-step{font-size:8px}.wizard-check-grid{grid-template-columns:1fr}.wizard-advanced .wizard-actions{gap:10px}.wizard-advanced .wizard-actions .button{flex:1;justify-content:center}}
+
+.customizer-toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:17px 0;border-bottom:1px solid #e8e5de}
+.customizer-toolbar>div,.save-design-panel>div:first-child,.comparison-heading{display:grid;gap:5px}
+.customizer-toolbar b,.save-design-panel b,.comparison-heading b{font-size:11px;color:#252a2b}
+.customizer-toolbar small,.save-design-panel small,.comparison-heading small{font-size:9px;color:#82898a}
+.compare-toggle{border:1px solid #d7d3cb;background:#fff;padding:10px 13px;font-size:9px;font-weight:700;color:#303637;cursor:pointer}
+.editable-role{grid-template-columns:25px minmax(100px,1fr) minmax(140px,220px) 25px}
+.role-quantity{display:grid;gap:5px;font-size:8px;color:#82898a}
+.role-quantity input,.add-role-row input,.save-design-controls input{width:100%;min-width:0;border:1px solid #dedbd4;background:#fff;padding:10px;font:inherit;font-size:10px;color:#171a1c}
+.remove-role{width:25px;height:25px;border:1px solid #e3ded6;background:#fff;color:#777;font-size:17px;cursor:pointer}
+.add-role-row{display:grid;grid-template-columns:minmax(0,1fr) 130px auto;gap:8px;padding:14px 0;border-bottom:1px solid #e8e5de}
+.add-role-row .button{white-space:nowrap;padding:10px 12px;font-size:9px}
+.plan-comparison,.save-design-panel{padding:17px 0;border-bottom:1px solid #e8e5de}
+.comparison-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+.comparison-grid>div{display:grid;gap:7px;padding:13px;background:#f3f1ec;min-width:0}
+.comparison-grid strong{font-size:11px}.comparison-grid b{font-size:10px;color:var(--accent)}.comparison-grid small{font-size:8px;line-height:1.5;color:#737a7b}
+.save-design-controls{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin-top:12px}
+.save-design-controls .button{padding:10px 14px;font-size:9px}
+.saved-design-list{display:grid;gap:7px;margin-top:13px}
+.saved-design-list>div{display:flex;align-items:center;gap:8px;border:1px solid #e5e1d9;padding:9px}
+.saved-design-list>div>button:first-child{flex:1;text-align:left;border:0;background:transparent;display:grid;gap:5px;cursor:pointer;min-width:0}
+.saved-design-list strong{font-size:10px;color:#252a2b}.saved-design-list small{font-size:8px;color:#858b8b}
+@media(max-width:680px){.customizer-toolbar{align-items:flex-start;flex-direction:column}.editable-role{grid-template-columns:20px minmax(0,1fr) 25px}.editable-role .role-quantity{grid-column:2;grid-row:2}.editable-role .remove-role{grid-column:3;grid-row:1}.add-role-row{grid-template-columns:1fr 1fr}.add-role-row input:first-child{grid-column:1/-1}.add-role-row .button{grid-column:1/-1;justify-content:center}.comparison-grid{grid-template-columns:1fr}.save-design-controls{grid-template-columns:1fr}.save-design-controls .button{justify-content:center}}
