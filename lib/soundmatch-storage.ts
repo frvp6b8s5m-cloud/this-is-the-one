@@ -64,3 +64,16 @@ export function parseSavedSoundMatchDesigns(value: unknown): SavedSoundMatchDesi
     }];
   });
 }
+
+export function validateSavedSoundMatchDesignDraft(value: unknown, existingCount: number): string | null {
+  if (!Number.isInteger(existingCount) || existingCount < 0) {
+    return "The saved-design count is invalid. Reload the page and try again.";
+  }
+  if (existingCount >= MAX_DESIGNS) {
+    return "You can save up to 50 designs in this browser. Delete one before saving another.";
+  }
+  if (parseSavedSoundMatchDesigns([value]).length !== 1) {
+    return "This design exceeds the save limits or contains invalid data. Keep its name, role names, and quantities within 120 characters, and use no more than 50 roles per tier.";
+  }
+  return null;
+}
