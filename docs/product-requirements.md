@@ -50,3 +50,43 @@ The user may leave optional information blank. Missing information should be vis
 - SoundMatch never marks an unverified system as approved.
 - Contact and brief actions accurately state that data is only copied locally.
 - CI runs lint, typecheck, tests, and a production build.
+
+
+## Advanced product roadmap
+
+### BZaudio PA Designer — paid plan
+PA Designer is a deeper system-layout workspace, distinct from SoundMatch:
+- Guided project setup for venue geometry, audience areas, use cases, constraints, and known acoustic information.
+- Configurable system zones and component roles: mains, subwoofers, front fills, delay fills, monitors, distributed speakers, processing, networking, and infrastructure.
+- Editable placement plans with speaker orientation, mounting method, aiming notes, coverage-area annotations, and distance measurements.
+- Multiple design scenarios with side-by-side equipment-role, quantity, budget-allocation, and tradeoff comparisons.
+- Design assumptions, missing-data checklist, revision history, saved projects, and exportable client proposal / technician handoff.
+- Clear separation between user-entered data, calculated estimates, manufacturer specifications, and items awaiting technical verification.
+
+The first release may provide schematic placement and planning estimates; it must not present a drawing as an acoustic prediction. No validated SPL map, directivity prediction, array prediction, delay alignment, rigging plan, electrical plan, or life-safety design is claimed without appropriate validated data and qualified review.
+
+### BZaudio Live Assistant — paid plan
+Live Assistant is an interactive show-support and troubleshooting workspace:
+- Select mixer family/model, firmware when known, PA configuration, stage layout, and the symptom or task.
+- Guided troubleshooting trees for no signal, routing errors, gain staging, feedback, noise, distortion, monitor problems, and system setup.
+- Context-aware mixing guidance for HPF, EQ, compression, gates/expanders, sends, groups, matrices, FX, and scene/show organization.
+- Signal-flow diagrams, channel/bus checklists, line-check and soundcheck workflows, and stage/patch documentation.
+- Saved show notes, equipment profiles, troubleshooting history, and reusable checklists when account storage is available.
+- Explain each recommendation, expected result, risk, and rollback step; distinguish general guidance from exact model-specific instructions.
+
+The initial release is user-guided; it does not claim to listen to a console, control a mixer, detect feedback from a live feed, or change console settings unless a supported integration is explicitly implemented and authorized.
+
+### Paid access and entitlement requirements
+- PA Designer and Live Assistant are Pro-plan features; public marketing must identify them as paid-plan features.
+- Enforce entitlements on trusted server-side routes/actions, not only by hiding client-side controls.
+- Provide clear upgrade/locked states without pretending a subscription exists.
+- Do not enable paid access or collect payment until authentication, a billing provider, webhook verification, subscription lifecycle handling, and entitlement tests are implemented.
+- Until billing is integrated, development/demo access must be clearly labeled and must not be represented as a live paid subscription.
+
+### Advanced quality bar
+- Responsive desktop and mobile layouts, keyboard navigation, accessible labels, clear focus states, and meaningful empty/loading/error states.
+- Reusable typed domain models and deterministic calculation/rules modules separated from presentation.
+- Input validation, units and assumptions shown beside calculations, safe numeric bounds, and tests for edge cases.
+- Save/restore and export flows must accurately disclose where data is stored and whether it is local-only or account-backed.
+- Every technical recommendation should expose its rationale, confidence/verification state, assumptions, and next action.
+- Avoid fabricated product data, pricing, compatibility, supplier relationships, or engineering certification.
