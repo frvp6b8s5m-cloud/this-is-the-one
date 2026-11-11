@@ -5,14 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, Check, CircleAlert, Clipboard, RotateCcw, ShieldCheck } from "lucide-react";
 import { evaluateSoundMatch, type SoundMatchInput, type PackagePlan, validateSoundMatchInput } from "@/lib/soundmatch";
 import { parseSavedSoundMatchDesigns, validateSavedSoundMatchDesignDraft, type SavedSoundMatchDesign } from "@/lib/soundmatch-storage";
-
-const initial: SoundMatchInput = {
-  venue: "church", indoor: "indoor", audience: 150, budget: null, priority: "speech",
-  existing: "", dimensions: "", installation: false, coverage: "unknown", zones: 1,
-  subwoofers: "unsure", monitoring: "unsure", micChannels: 16, mixer: "no-preference",
-  sources: ["Microphones", "Playback"], connectivity: ["Analog XLR"], mounting: "unknown",
-  power: "unknown", expansion: "some",
-};
+import { canNavigateToSoundMatchStep, createInitialSoundMatchWizardState } from "@/lib/soundmatch-workflow";
 
 const steps = ["Space & venue", "Audience & coverage", "Sound goals", "Signal workflow", "Infrastructure", "Existing gear"];
 
@@ -24,7 +17,7 @@ function Choice({ label, description, selected, onClick }: { label: string; desc
 }
 
 export function SoundMatchWizard() {
-  const [form, setForm] = useState<SoundMatchInput>(initial);
+  const [form, setForm] = useState<SoundMatchInput>(() => createInitialSoundMatchWizardState().form);
   const [step, setStep] = useState(0);
   const [selected, setSelected] = useState<PackagePlan["name"]>("Recommended");
   const [copied, setCopied] = useState(false);
@@ -78,7 +71,7 @@ export function SoundMatchWizard() {
         <div className="wizard-aside-label">SOUNDMATCH / CONFIGURATOR</div>
         <h2>Design the<br/><span>whole system.</span></h2>
         <p>Build a detailed project brief around your venue, audience, signal flow, and installation needs. Unknown answers are okay—they become review items.</p>
-        <div className="wizard-steps">{steps.map((label,index)=><button type="button" key={label} onClick={()=>setStep(index)} className={index===step?"wizard-step active":index<step?"wizard-step complete":"wizard-step"}><span>{index<step?<Check size={15}/>:String(index+1).padStart(2,"0")}</span>{label}</button>)}<div className={step===6?"wizard-step active":"wizard-step"}><span>07</span>Your system plan</div></div>
+        <div className="wizard-steps">{steps.map((label,index)=><button type="button" key={label} disabled={!canNavigateToSoundMatchStep(step,index)} onClick={()=>setStep(index)} className={index===step?"wizard-step active":index<step?"wizard-step complete":"wizard-step"}><span>{index<step?<Check size={15}/>:String(index+1).padStart(2,"0")}</span>{label}</button>)}<div className={step===6?"wizard-step active":"wizard-step"}><span>07</span>Your system plan</div></div>
         <div className="wizard-aside-foot"><ShieldCheck size={17}/> No guessed specifications.</div>
       </aside>
       <div className="wizard-main">
@@ -101,7 +94,7 @@ export function SoundMatchWizard() {
 {comparePlans && <div className="plan-comparison"><div className="comparison-heading"><b>Side-by-side scope comparison</b><small>See which planning roles are included in each approach. Quantities and scope are preliminary, not product counts.</small></div><div className="comparison-matrix"><div className="comparison-matrix-head"><span>System role</span>{plans.map(plan=><strong key={plan.name}>{plan.name}</strong>)}</div>{Array.from(new Set(plans.flatMap(plan=>(editablePlans[plan.name]??plan.roles).map(role=>role.role)))).map(roleName=><div className="comparison-matrix-row" key={roleName}><b>{roleName}</b>{plans.map(plan=>{const role=(editablePlans[plan.name]??plan.roles).find(item=>item.role===roleName);return <span key={plan.name}>{role?role.quantity:"—"}</span>})}</div>)}<div className="comparison-matrix-foot"><span>Planning items</span>{plans.map(plan=><strong key={plan.name}>{(editablePlans[plan.name]??plan.roles).length}</strong>)}</div></div><p className="comparison-note">A dash means that role is not currently included in that tier&apos;s planning outline. This comparison does not establish product compatibility, final quantities, or performance.</p></div>}
 <div className="save-design-panel"><div><b>Save this configuration</b><small>Saved in this browser on this device. No account required.</small><small>{savedDesigns.length}/50 saved designs</small></div>{saveError && <p className="field-help" role="alert">{saveError}</p>}{savedDesigns.length >= 50 && <p className="field-help" role="status">You have reached the 50-design limit. Delete a saved design before saving another.</p>}<div className="save-design-controls"><input aria-label="Design name" maxLength={120} value={saveName} onChange={e=>setSaveName(e.target.value)} placeholder="e.g. Main sanctuary system"/><button type="button" className="button button-primary" disabled={!saveName.trim() || savedDesigns.length >= 50} onClick={()=>{const draft: SavedSoundMatchDesign = {id:globalThis.crypto?.randomUUID?.() ?? String(Date.now()),name:saveName.trim(),form,selected,roles:editablePlans};const validationError=validateSavedSoundMatchDesignDraft(draft,savedDesigns.length);if(validationError){setSaveError(validationError);return;}const next=[...savedDesigns,draft];try{window.localStorage.setItem("bzaudio-soundmatch-designs",JSON.stringify(next));setSavedDesigns(next);setSaveName("");setSaveError("");}catch{setSaveError("Could not save this design. Browser storage may be unavailable or full.");}}}>Save design</button></div>{savedDesigns.length>0 && <div className="saved-design-list">{savedDesigns.map(design=><div key={design.id}><button type="button" onClick={()=>{setForm(design.form);setSelected(design.selected);setEditablePlans(design.roles);setStep(6);}}><strong>{design.name}</strong><small>{design.selected} · {design.form.venue} · {design.form.audience.toLocaleString()} audience</small></button><button type="button" className="remove-role" aria-label={"Delete "+design.name} onClick={()=>{const next=savedDesigns.filter(item=>item.id!==design.id);try{window.localStorage.setItem("bzaudio-soundmatch-designs",JSON.stringify(next));setSavedDesigns(next);setSaveError("");}catch{setSaveError("Could not delete this design from browser storage.");}}}>×</button></div>)}</div>}</div>
             <div className="review-warning"><CircleAlert size={18}/><p><b>Preliminary planning only.</b> This is not a verified bill of materials, acoustic simulation, coverage prediction, or rigging/electrical design. Exact products, pricing, inventory, signal compatibility, SPL, coverage, arrays, structural loads, power, and commissioning require verified manufacturer data and qualified technical review.</p></div>
-            <div className="results-actions"><button type="button" className="button button-primary" onClick={copyBrief}><Clipboard size={17}/>{copied?"Brief copied":"Copy detailed project brief"}</button><Link href="/contact?type=soundmatch" className="button button-ghost button-dark">Request a technical review <ArrowRight size={17}/></Link><button type="button" className="reset-button" onClick={()=>{setForm(initial);setStep(0);setSelected("Recommended");setCopied(false);}}><RotateCcw size={15}/> Start over</button></div>
+            <div className="results-actions"><button type="button" className="button button-primary" onClick={copyBrief}><Clipboard size={17}/>{copied?"Brief copied":"Copy detailed project brief"}</button><Link href="/contact?type=soundmatch" className="button button-ghost button-dark">Request a technical review <ArrowRight size={17}/></Link><button type="button" className="reset-button" onClick={()=>{const reset=createInitialSoundMatchWizardState();setForm(reset.form);setStep(reset.step);setSelected(reset.selected);setCopied(reset.copied);setEditablePlans(reset.editablePlans);setCustomRole(reset.customRole);setCustomQuantity(reset.customQuantity);setComparePlans(reset.comparePlans);setSaveName(reset.saveName);}}><RotateCcw size={15}/> Start over</button></div>
           </div>
         </div>}
       </div>
