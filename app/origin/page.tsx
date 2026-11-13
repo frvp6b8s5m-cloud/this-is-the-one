@@ -72,7 +72,7 @@ export default function OriginPage() {
             </div>
           </div>
 
-          <div className={styles.visual} aria-label="Abstract project archive visualization">
+          <div className={styles.visual} aria-hidden="true">
             <div className={styles.orbit orbitOne} />
             <div className={styles.orbit orbitTwo} />
             <div className={styles.orbit orbitThree} />
