@@ -73,17 +73,17 @@ export default function OriginPage() {
           </div>
 
           <div className={styles.visual} aria-hidden="true">
-            <div className={styles.orbit orbitOne} />
-            <div className={styles.orbit orbitTwo} />
-            <div className={styles.orbit orbitThree} />
+            <div className={`${styles.orbit} ${styles.orbitOne}`} />
+            <div className={`${styles.orbit} ${styles.orbitTwo}`} />
+            <div className={`${styles.orbit} ${styles.orbitThree}`} />
             <div className={styles.core}>
               <div className={styles.coreInner}>
                 <Fingerprint size={54} strokeWidth={1} />
                 <span>ORIGIN</span>
               </div>
             </div>
-            <span className={styles.visualLabel visualLabelTop}>SIGNAL / 001</span>
-            <span className={styles.visualLabel visualLabelBottom}>SOURCE UNDISCLOSED</span>
+            <span className={`${styles.visualLabel} ${styles.visualLabelTop}`}>SIGNAL / 001</span>
+            <span className={`${styles.visualLabel} ${styles.visualLabelBottom}`}>SOURCE UNDISCLOSED</span>
             <span className={styles.crosshair} />
           </div>
         </section>
