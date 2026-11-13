@@ -6,6 +6,7 @@ import { Menu, X, AudioLines } from "lucide-react";
 
 const links = [
   { href: "/shop", label: "Shop" },
+  { href: "/origin", label: "Origin" },
   { href: "/soundmatch", label: "SoundMatch" },
   { href: "/tools", label: "Tools" },
   { href: "/installation", label: "Installation" },
