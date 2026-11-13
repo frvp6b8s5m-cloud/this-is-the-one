@@ -49,7 +49,7 @@ export default function OriginPage() {
         <span className={styles.classification}>RESTRICTED</span>
       </header>
 
-      <main className={styles.main}>
+      <div className={styles.main}>
         <div className={styles.eyebrow}>
           <ScanLine size={14} />
           <span>PROJECT ARCHIVE</span>
@@ -137,7 +137,7 @@ export default function OriginPage() {
           <Link href="/" className={styles.returnLink}><ArrowLeft size={14} /> RETURN TO BZAUDIO <ArrowUpRight size={13} /></Link>
           <span>END OF AVAILABLE FILE</span>
         </footer>
-      </main>
+      </div>
     </div>
   );
 }
