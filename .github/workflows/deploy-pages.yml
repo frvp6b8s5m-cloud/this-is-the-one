@@ -27,10 +27,10 @@ jobs:
         with:
           node-version: 24
 
+      # Enable GitHub Pages once in repository Settings > Pages > Build and deployment > Source.
+      # The Actions token cannot create the Pages site for this repository.
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Install dependencies
         run: npm install --no-audit --no-fund
