@@ -24,6 +24,12 @@ npm run dev
 
 Open http://localhost:3000.
 
+## GitHub Pages deployment
+
+This project is configured as a static Next.js export for GitHub Pages. The deployment workflow builds the site with the `/this-is-the-one` project base path and publishes the generated `out/` directory when changes are pushed to `main`. In the repository settings, set **Pages → Build and deployment → Source** to **GitHub Actions**. The published site uses the repository's GitHub Pages URL unless a custom domain is configured separately.
+
+The `/origin` archive is intentionally unlisted and marked `noindex`; it is still a public page, not an authenticated or secret area.
+
 ## Quality checks
 
 ```bash
