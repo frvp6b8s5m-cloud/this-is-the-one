@@ -55,3 +55,44 @@ describe("validateSoundMatchInput", () => {
     expect(validateSoundMatchInput({ ...validInput, micChannels: 257 })).toContain("Input channels must be between 0 and 256.");
   });
 });
+
+
+describe("validateSoundMatchInput — untrusted runtime values", () => {
+  it("rejects unsupported enum values instead of generating a plan", () => {
+    const invalid = { ...validInput, venue: "wedding" } as unknown as SoundMatchInput;
+    expect(validateSoundMatchInput(invalid).length).toBeGreaterThan(0);
+  });
+
+  it("rejects malformed string and collection fields without throwing", () => {
+    const invalid = {
+      ...validInput,
+      dimensions: null,
+      existing: 42,
+      sources: "Microphones",
+      connectivity: null,
+    } as unknown as SoundMatchInput;
+
+    expect(() => validateSoundMatchInput(invalid)).not.toThrow();
+    expect(validateSoundMatchInput(invalid).length).toBeGreaterThan(0);
+  });
+
+  it("rejects unsupported source and connection entries", () => {
+    const invalid = {
+      ...validInput,
+      sources: ["Microphones", "<script>alert(1)</script>"],
+      connectivity: ["Analog XLR", "made-up protocol"],
+    };
+    expect(validateSoundMatchInput(invalid).length).toBeGreaterThan(0);
+  });
+
+  it("rejects duplicate and excessive selections", () => {
+    expect(validateSoundMatchInput({
+      ...validInput,
+      sources: ["Microphones", "Microphones"],
+    }).length).toBeGreaterThan(0);
+    expect(validateSoundMatchInput({
+      ...validInput,
+      connectivity: Array(13).fill("Analog XLR"),
+    }).length).toBeGreaterThan(0);
+  });
+});
